@@ -16,4 +16,17 @@
         <!-- Customize your theme here. -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
+
+    <style name="Theme.ELCous.SplashActivity" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/main_orange</item>
+        <item name="colorPrimaryVariant">@color/secondary_orange</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:colorBackground">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="android:navigationBarColor" tools:targetApi="21">@color/white</item>
+        <!-- Customize your theme here. -->
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+    </style>
 </resources>

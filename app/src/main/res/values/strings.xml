@@ -5,4 +5,8 @@
     <string name="choose">Choisissez votre adresse de départ et votre déstination.</string>
     <string name="departure">Départ</string>
     <string name="destination">Arrivée</string>
+    <string name="search">Rechercher</string>
+    <string name="welcome_text0">Ne ratez plus votre cous , quelques minutes vous suffiront pour vous renseigner.</string>
+    <string name="welcome_text1">Simple, rapide et sécurisé</string>
+    <string name="welcome_button">C’est Parti !</string>
 </resources>

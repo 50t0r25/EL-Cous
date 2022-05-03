@@ -51,7 +51,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="700dp"
+                android:layout_marginTop="600dp"
                 android:text="TEMP"
                 android:textSize="20sp"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -126,16 +126,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:ms_arrow_tint="@color/main_orange"
+                    android:fontFamily="@font/nunito_regular"
                     android:hint="TEST"/>
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/spinner_background"
+                android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="@id/destinationTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/destinationTextView"
@@ -144,10 +146,26 @@
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:ms_arrow_tint="@color/main_orange"
-                    android:hint="TEST"/>
+                    android:fontFamily="@font/nunito_regular"
+                    android:hint="TEST"
+                    app:ms_arrow_tint="@color/main_orange" />
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/searchButton"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginTop="70dp"
+                android:textSize="20sp"
+                android:text="@string/search"
+                android:fontFamily="@font/nunito_bold"
+                app:strokeColor="@color/main_orange"
+                app:strokeWidth="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
