@@ -1,30 +1,35 @@
 package dz.notacompany.el_cous
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        // Define the shared preferences
         val sharedpref: SharedPreferences =
-            getApplicationContext().getSharedPreferences(
-                "com.example.android.your_application",
+            applicationContext.getSharedPreferences(
+                "dz.notacompany.el_cous",
                 MODE_PRIVATE
             )
 
-        val token: String? = sharedpref.getString("token", null)
-        if (token == "False" || token == null) {
-            // rest of the FirstTime Logic here
+        letsGoButton.setOnClickListener {
 
+            // Set token to true, defining the the first launch has occurred
             sharedpref.edit().putString("token", "true").apply()
-        } else {
-            // rest of the Not-FirstTime Logic here
+
+            // Start MainActivity
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
         }
     }
 }
