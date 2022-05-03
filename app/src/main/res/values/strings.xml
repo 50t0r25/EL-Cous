@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">EL Cous</string>
+    <string name="top_bar_home">Acceuil</string>
+    <string name="itinerary">Itinéraire</string>
+    <string name="choose">Choisissez votre adresse de départ et votre déstination.</string>
+    <string name="departure">Départ</string>
+    <string name="destination">Arrivée</string>
+</resources>
