@@ -115,6 +115,7 @@
                 app:layout_constraintTop_toTopOf="@+id/departureTextView">
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/departureSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:ms_arrow_tint="@color/main_orange"
@@ -124,7 +125,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayout"
+                android:id="@+id/departureSpinnerLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -136,6 +137,7 @@
                 app:layout_constraintTop_toTopOf="@+id/destinationTextView">
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/destinationSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/nunito_regular"
@@ -153,9 +155,9 @@
                 android:fontFamily="@font/nunito_bold"
                 android:text="@string/search"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-                app:layout_constraintStart_toStartOf="@+id/linearLayout"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="@+id/departureSpinnerLayout"
+                app:layout_constraintStart_toStartOf="@+id/departureSpinnerLayout"
+                app:layout_constraintTop_toBottomOf="@+id/departureSpinnerLayout"
                 app:strokeColor="@color/main_orange"
                 app:strokeWidth="2dp" />
 

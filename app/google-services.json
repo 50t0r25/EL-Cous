@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "555979617336",
+    "project_id": "el-cous",
+    "storage_bucket": "el-cous.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555979617336:android:3fa497ecdf2949fbf3e2cd",
+        "android_client_info": {
+          "package_name": "dz.notacompany.el_cous"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555979617336-6stpqnuvhu5rcq5338dki57jeju2r3iu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEoViK93D7mDoPRnwTN5zWvnA2iXdMb7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555979617336-6stpqnuvhu5rcq5338dki57jeju2r3iu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
