@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var loading: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_ELCous) // Sets theme to override splash screen theme
         super.onCreate(savedInstanceState)
 
         // Define the shared preferences
@@ -43,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             // Not the first time launch
 
             // Display MainActivity's layout
-            setTheme(R.style.Theme_ELCous) // Sets theme to override splash screen theme
             setContentView(R.layout.activity_main)
         }
 

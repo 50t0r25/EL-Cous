@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.activity_splash.*
 class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_ELCous_SplashActivity) // Sets theme to override splash screen theme
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         // Define the shared preferences
