@@ -12,4 +12,5 @@
     <string name="welcome_button">C’est Parti !</string>
     <string name="loading">Patientez svp…</string>
     <string name="empty_database_error">Une erreur est survenue, Assurez vous que vous avez une connexion internet stable et réessayer.</string>
+    <string name="search_results">Résultat de la recherche:</string>
 </resources>
