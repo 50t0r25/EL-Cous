@@ -8,10 +8,12 @@
 
     <ImageView
         android:id="@+id/backButton"
-        android:layout_width="50dp"
+        android:layout_width="40dp"
         android:layout_height="0dp"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/topBarTextView"
+        android:padding="9dp"
+        android:layout_marginStart="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/flFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back"
@@ -20,13 +22,29 @@
     <TextView
         android:id="@+id/topBarTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nunito_extrabold"
+        android:layout_height="0dp"
         android:layout_marginStart="20dp"
+        android:fontFamily="@font/nunito_extrabold"
         android:padding="10dp"
         android:text="@string/top_bar_home"
         android:textColor="@color/white"
         android:textSize="25sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/flFragment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/topBarTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:fontFamily="@font/nunito_extrabold"
+        android:padding="10dp"
+        android:text="@string/top_bar_schedules"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/flFragment"
         app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,10 +52,11 @@
         android:id="@+id/flFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topBarTextView">
+        app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
