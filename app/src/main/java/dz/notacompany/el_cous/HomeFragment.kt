@@ -23,7 +23,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         mainAct = activity as MainActivity // Reference to MainActivity
 
-        // Reseting the elements of the top bar
+        // Resetting the elements of the top bar
         mainAct.backButton.visibility = View.GONE
         mainAct.topBarTextView.visibility = View.VISIBLE
         mainAct.topBarTextView2.visibility = View.GONE
@@ -120,8 +120,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         // Search clicked
         searchButton.setOnClickListener {
-            Toast.makeText(context, idToLoad, Toast.LENGTH_LONG).show()
-            // TODO: Open new fragment for IDs details
+            mainAct.replaceCurrentFragment(DetailsFragment(idToLoad), false)
         }
 
     }

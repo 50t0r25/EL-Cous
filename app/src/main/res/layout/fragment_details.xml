@@ -25,9 +25,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
                 android:fontFamily="@font/nunito_extrabold"
                 android:text="@string/departure"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_extrabold"
                 android:text="@string/destination"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/staticDepartureTextView"
                 app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
@@ -58,6 +59,7 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:fontFamily="@font/nunito_regular"
+                android:textSize="18sp"
                 android:text="DEPART"
                 app:layout_constraintBottom_toBottomOf="@+id/staticDepartureTextView"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -70,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="40dp"
                 android:fontFamily="@font/nunito_regular"
+                android:textSize="18sp"
                 android:text="DESTINATION"
                 app:layout_constraintBottom_toBottomOf="@+id/staticDestinationTextView"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -78,13 +81,13 @@
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="70dp"
                 android:fontFamily="@font/nunito_extrabold"
                 android:text="@string/search_results"
                 android:textColor="@color/main_orange"
-                android:textSize="20sp"
+                android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/staticDestinationTextView" />
