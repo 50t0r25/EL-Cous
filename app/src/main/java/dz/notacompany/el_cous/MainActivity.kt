@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             // Not the first time launch
 
             // Display MainActivity's layout
+            setTheme(R.style.Theme_ELCous) // Sets theme to override splash screen theme
             setContentView(R.layout.activity_main)
         }
 

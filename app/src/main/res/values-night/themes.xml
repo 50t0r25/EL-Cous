@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
     <style name="Theme.ELCous" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
@@ -17,16 +18,20 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
-    <style name="Theme.ELCous.SplashActivity" parent="Theme.Material3.Light.NoActionBar">
+    <!-- SplashActivity theme, only used on first launch. -->
+    <style name="Theme.ELCous.SplashActivity">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/main_orange</item>
-        <item name="colorPrimaryVariant">@color/secondary_orange</item>
-        <item name="colorOnPrimary">@color/white</item>
         <item name="android:colorBackground">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
-        <item name="android:navigationBarColor" tools:targetApi="21">@color/white</item>
-        <!-- Customize your theme here. -->
-        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
+
+    <!-- Splash Screen. -->
+    <style name="Theme.ELCous.Launcher">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="colorPrimaryDark">@color/main_orange</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryDark</item>
+        <item name="android:navigationBarColor" tools:targetApi="21">?attr/colorPrimaryDark</item>
+    </style>
+
 </resources>
