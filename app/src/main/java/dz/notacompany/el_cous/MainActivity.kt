@@ -4,11 +4,20 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.IOException
+import java.net.InetSocketAddress
+import java.net.Socket
+import java.net.SocketAddress
+import java.util.concurrent.LinkedBlockingQueue
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var loading: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +48,9 @@ class MainActivity : AppCompatActivity() {
 
         replaceCurrentFragment(HomeFragment(),true)
 
-        // -------- TEST ------------
-        topBarTextView.setOnClickListener {
-            replaceCurrentFragment(HomeFragment(),false)
+        backButton.setOnClickListener {
+            supportFragmentManager.popBackStack()
         }
-        // ---------------------------
-
     }
 
     // Replaces fragment while either clearing or adding to BackStack
@@ -60,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             )
             replace(R.id.flFragment, fragment)
 
-            // If clearbackstack is true, clear the backstack and open the new fragment
+            // If clearBackStack is true, clear the backstack and open the new fragment
             // Else don't clear it and add the new fragment to it
             if (clearBackStack) {
                 supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
@@ -69,4 +75,42 @@ class MainActivity : AppCompatActivity() {
             }
             commit()
         }
+
+    // ------------------- LOADING DIALOG START ------------------------
+    // Loading dialog that restricts user from pressing anything while it's displayed
+
+    fun createLoadingDialog() {
+        loading = MaterialAlertDialogBuilder(this)
+            .setView(this.layoutInflater.inflate(R.layout.dialog_loading, null))
+            .setCancelable(false)
+            .create()
+        loading.show()
+    }
+
+    fun dismissLoadingDialog() {
+        loading.dismiss()
+    }
+    // ------------------- LOADING DIALOG END ---------------------------
+
+
+    // Function checks if user has internet access
+    fun isOnline(): Boolean {
+        val queue = LinkedBlockingQueue<Boolean>()
+
+        // Start a thread to run check on a non-UI thread
+        // prevents freezing on networks with no internet
+        Thread {
+            try {
+                val timeoutMs = 1500
+                val sock = Socket()
+                val sockaddr: SocketAddress = InetSocketAddress("8.8.8.8", 53)
+                sock.connect(sockaddr, timeoutMs)
+                sock.close()
+                queue.add(true)
+            } catch (e: IOException) {
+                queue.add(false)
+            }
+        }.start()
+        return queue.take()
+    }
 }

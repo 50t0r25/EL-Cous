@@ -119,13 +119,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:ms_arrow_tint="@color/main_orange"
-                    android:fontFamily="@font/nunito_regular"
-                    android:hint="TEST"/>
+                    android:fontFamily="@font/nunito_regular"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/departureSpinnerLayout"
+                android:id="@+id/destinationSpinnerLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -141,7 +140,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/nunito_regular"
-                    android:hint="TEST"
                     app:ms_arrow_tint="@color/main_orange" />
 
             </LinearLayout>
@@ -155,9 +153,9 @@
                 android:fontFamily="@font/nunito_bold"
                 android:text="@string/search"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/departureSpinnerLayout"
-                app:layout_constraintStart_toStartOf="@+id/departureSpinnerLayout"
-                app:layout_constraintTop_toBottomOf="@+id/departureSpinnerLayout"
+                app:layout_constraintEnd_toEndOf="@+id/destinationSpinnerLayout"
+                app:layout_constraintStart_toStartOf="@+id/destinationSpinnerLayout"
+                app:layout_constraintTop_toBottomOf="@+id/destinationSpinnerLayout"
                 app:strokeColor="@color/main_orange"
                 app:strokeWidth="2dp" />
 

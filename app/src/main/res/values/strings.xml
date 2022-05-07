@@ -9,4 +9,6 @@
     <string name="welcome_text0">Ne ratez plus votre cous , quelques minutes vous suffiront pour vous renseigner.</string>
     <string name="welcome_text1">Simple, rapide et sécurisé</string>
     <string name="welcome_button">C’est Parti !</string>
+    <string name="loading">Patientez svp…</string>
+    <string name="empty_database_error">Une erreur est survenue, Assurez vous que vous avez une connexion internet stable et réessayer.</string>
 </resources>
