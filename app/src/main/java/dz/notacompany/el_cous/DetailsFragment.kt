@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -26,22 +27,7 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
         mainAct.topBarLayout.visibility = View.VISIBLE
         mainAct.topBarTextView.visibility = View.GONE
 
-        val someList = mutableListOf<ScheduleItem>(
-            ScheduleItem("joiv",4,"14:00","14:30"),
-            ScheduleItem("joiv",2,"10:00","12:30"),
-            ScheduleItem("joiv",3,"13:00","13:30"),
-            ScheduleItem("joiv",1,"08:00","09:30"),
-            ScheduleItem("joiv",5,"15:00","15:30"),
-            ScheduleItem("joiv",6,"16:00","16:30")
-        )
-
-        someList.sortBy { it.itemOrder }
-
-        val newAdapter = SchedulesAdapter(someList)
-
-        schedulesRecyclerView.adapter = newAdapter
-        schedulesRecyclerView.layoutManager = LinearLayoutManager(context)
-        schedulesRecyclerView.isNestedScrollingEnabled = false
+        val schedulesList = mutableListOf<ScheduleItem>()
 
         mainAct.createLoadingDialog()
 
@@ -54,8 +40,29 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
                 currentDepartureTextView.text = trajet.data!!["depart"].toString()
                 currentDestinationTextView.text = trajet.data!!["destination"].toString()
 
-                mainAct.dismissLoadingDialog()
+                db.collection("trajets").document(documentID).collection("horaires").get(source)
+                    .addOnSuccessListener { horaires ->
+
+                        for (horaire in horaires) {
+                            addScheduleToList(horaire,schedulesList)
+                        }
+                        schedulesList.sortBy { it.itemOrder }
+
+                        schedulesRecyclerView.adapter = SchedulesAdapter(schedulesList)
+                        schedulesRecyclerView.layoutManager = LinearLayoutManager(context)
+
+                        mainAct.dismissLoadingDialog()
+                    }
             }
 
+    }
+
+    private fun addScheduleToList(horaire: QueryDocumentSnapshot, list: MutableList<ScheduleItem>) {
+        val id = horaire.id
+        val order = horaire.data["ordre"].toString().toInt()
+        val departure = horaire.data["depart"].toString()
+        val arrival = horaire.data["arrive"].toString()
+
+        list.add(ScheduleItem(id,order,departure,arrival))
     }
 }
