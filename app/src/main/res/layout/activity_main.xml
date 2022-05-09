@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/backButton"
-        android:layout_width="40dp"
-        android:layout_height="0dp"
-        android:padding="9dp"
-        android:layout_marginStart="10dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/flFragment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back"
-        app:tint="@color/white" />
-
     <TextView
         android:id="@+id/topBarTextView"
         android:layout_width="wrap_content"
@@ -34,19 +21,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/topBarTextView2"
+    <LinearLayout
+        android:id="@+id/topBarLayout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:fontFamily="@font/nunito_extrabold"
-        android:padding="10dp"
-        android:text="@string/top_bar_schedules"
-        android:textColor="@color/white"
-        android:textSize="25sp"
         android:visibility="gone"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/flFragment"
-        app:layout_constraintStart_toEndOf="@+id/backButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:padding="9dp"
+            app:srcCompat="@drawable/back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/topBarTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/nunito_extrabold"
+            android:padding="10dp"
+            android:text="@string/top_bar_schedules"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/flFragment"

@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         replaceCurrentFragment(HomeFragment(),true)
 
-        backButton.setOnClickListener {
+        topBarLayout.setOnClickListener {
             supportFragmentManager.popBackStack()
         }
     }

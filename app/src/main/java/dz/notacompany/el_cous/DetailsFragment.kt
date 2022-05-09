@@ -22,9 +22,8 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
         mainAct = activity as MainActivity // Reference to MainActivity
 
         // Resetting the elements of the top bar
-        mainAct.backButton.visibility = View.VISIBLE
+        mainAct.topBarLayout.visibility = View.VISIBLE
         mainAct.topBarTextView.visibility = View.GONE
-        mainAct.topBarTextView2.visibility = View.VISIBLE
 
         mainAct.createLoadingDialog()
 
