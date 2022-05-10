@@ -25,8 +25,8 @@
         android:id="@+id/topBarLayout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:visibility="gone"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/flFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -63,4 +63,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
+
+    <ImageView
+        android:id="@+id/adminButton"
+        android:padding="13dp"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/flFragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/admin_icon"
+        app:tint="@color/white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

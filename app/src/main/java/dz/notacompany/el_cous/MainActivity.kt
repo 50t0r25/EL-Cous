@@ -18,6 +18,7 @@ import java.util.concurrent.LinkedBlockingQueue
 class MainActivity : AppCompatActivity() {
 
     private lateinit var loading: AlertDialog
+    var isAdmin = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ELCous) // Sets theme to override splash screen theme
@@ -51,6 +52,10 @@ class MainActivity : AppCompatActivity() {
 
         topBarLayout.setOnClickListener {
             supportFragmentManager.popBackStack()
+        }
+
+        adminButton.setOnClickListener {
+            replaceCurrentFragment(AdminPanelFragment(),false)
         }
     }
 

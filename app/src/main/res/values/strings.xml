@@ -2,6 +2,7 @@
     <string name="app_name">EL Cous</string>
     <string name="top_bar_home">Acceuil</string>
     <string name="top_bar_schedules">Horaires prévus</string>
+    <string name="top_bar_admin">Espace administrateur</string>
     <string name="itinerary">Itinéraire</string>
     <string name="choose">Choisissez votre adresse de départ et votre déstination.</string>
     <string name="departure">Départ</string>
@@ -13,4 +14,12 @@
     <string name="loading">Patientez svp…</string>
     <string name="empty_database_error">Une erreur est survenue, Assurez vous que vous avez une connexion internet stable et réessayer.</string>
     <string name="search_results">Résultat de la recherche:</string>
+    <string name="enter_admin_key">Veuillez saisir la clé administrateur:</string>
+    <string name="admin_key">Clé administrateur</string>
+    <string name="confirm">Confirmer</string>
+    <string name="wrong_key">Mauvaise clé, veuillez réessayer</string>
+    <string name="you_are_admin">Vous êtes adminstrateur</string>
+    <string name="uni_to_stop">Univ -> Arret</string>
+    <string name="stop_to_uni">Arret -> Univ</string>
+    <string name="admin_details">Ici vous pouvez ajoutez des trajets.\nVous pouvez aussi supprimer des trajets depuis leur page details appropriée.</string>
 </resources>
