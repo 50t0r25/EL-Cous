@@ -121,6 +121,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         // Search clicked
         searchButton.setOnClickListener {
             mainAct.replaceCurrentFragment(DetailsFragment(idToLoad), false)
+
+            // Clears the spinners to fix some retarded problem
+            departureSpinner.setItems(String())
+            destinationSpinner.setItems(String())
         }
 
     }
