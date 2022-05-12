@@ -32,13 +32,17 @@ class AdminPanelFragment : Fragment(R.layout.fragment_admin_panel) {
             nonAdminLayout.visibility = View.VISIBLE
         }
 
+        // Button to become admin
         confirmAdminKeyButton.setOnClickListener {
 
             mainAct.createLoadingDialog()
 
+            // Fetch the admin key from the DB
             db.collection("app").document("data").get(Source.SERVER)
                 .addOnSuccessListener { info ->
 
+                    // If admin key is correct, mark user as admin and display the admin layout
+                    // Else ask user to try again
                     if (adminKeyInput.text.toString() == info.data!!["admin_key"].toString()) {
                         mainAct.isAdmin = true
 
@@ -62,6 +66,7 @@ class AdminPanelFragment : Fragment(R.layout.fragment_admin_panel) {
         }
     }
 
+    // Function takes a schedule preset and makes a new Route in the DB
     private fun addTrajetToDB(list : MutableList<out HashMap<String, out Any>>) {
         mainAct.createLoadingDialog()
 
@@ -75,8 +80,10 @@ class AdminPanelFragment : Fragment(R.layout.fragment_admin_panel) {
                 "destination" to destination
             )
 
+            // Reference to our new route in the DB
             val docRef = db.collection("trajets").document("${departure}_${destination}")
 
+            // Batch write adds the route then it's scheduled times
             db.runBatch { batch ->
 
                 batch.set(docRef, newTrajet)
@@ -93,6 +100,7 @@ class AdminPanelFragment : Fragment(R.layout.fragment_admin_panel) {
         }
     }
 
+    // Uni To Stop schedule preset
     private val utsList = mutableListOf(
         hashMapOf(
             "ordre" to 1,
@@ -141,6 +149,7 @@ class AdminPanelFragment : Fragment(R.layout.fragment_admin_panel) {
         )
     )
 
+    // Stop To Uni schedule preset
     private val stuList = mutableListOf(
         hashMapOf(
             "ordre" to 1,

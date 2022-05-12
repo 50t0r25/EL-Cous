@@ -27,6 +27,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         mainAct.topBarLayout.visibility = View.GONE
         mainAct.topBarTextView.visibility = View.VISIBLE
         mainAct.adminButton.visibility = View.VISIBLE
+        mainAct.deleteRouteButton.visibility = View.GONE
 
         // These lists store all the departures, destinations and their IDs from the database
         val departureList = arrayListOf<String>()

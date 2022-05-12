@@ -22,4 +22,7 @@
     <string name="uni_to_stop">Univ -> Arret</string>
     <string name="stop_to_uni">Arret -> Univ</string>
     <string name="admin_details">Ici vous pouvez ajoutez des trajets.\nVous pouvez aussi supprimer des trajets depuis leur page details appropriée.</string>
+    <string name="cancel">Annuler</string>
+    <string name="caution">Avertissement</string>
+    <string name="delete_route">Êtes-vous sûr de vouloir definitivement supprimer ce trajet?</string>
 </resources>

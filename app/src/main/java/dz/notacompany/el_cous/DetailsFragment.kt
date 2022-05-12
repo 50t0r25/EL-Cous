@@ -23,11 +23,14 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
 
         mainAct = activity as MainActivity // Reference to MainActivity
 
+        mainAct.currentDocument = documentID // Used to delete Routes if admin is user
+
         // Resetting the elements of the top bar
         mainAct.topBarLayout.visibility = View.VISIBLE
         mainAct.topBarTextView2.text = getString(R.string.top_bar_schedules)
         mainAct.topBarTextView.visibility = View.GONE
         mainAct.adminButton.visibility = View.GONE
+        if (mainAct.isAdmin) mainAct.deleteRouteButton.visibility = View.VISIBLE
 
         val schedulesList = mutableListOf<ScheduleItem>()
 

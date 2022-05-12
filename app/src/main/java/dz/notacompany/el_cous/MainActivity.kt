@@ -4,10 +4,16 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.Source
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 import java.net.InetSocketAddress
@@ -17,8 +23,12 @@ import java.util.concurrent.LinkedBlockingQueue
 
 class MainActivity : AppCompatActivity() {
 
+    private val db = Firebase.firestore
+
     private lateinit var loading: AlertDialog
     var isAdmin = false
+
+    lateinit var currentDocument: String // Used to get the Route ID from DetailsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ELCous) // Sets theme to override splash screen theme
@@ -56,6 +66,50 @@ class MainActivity : AppCompatActivity() {
 
         adminButton.setOnClickListener {
             replaceCurrentFragment(AdminPanelFragment(),false)
+        }
+
+        // Button to delete Route (Only available for admins)
+        deleteRouteButton.setOnClickListener {
+
+            // Dialog to ask confirmations
+            MaterialAlertDialogBuilder(this)
+                .setTitle(getString(R.string.caution))
+                .setMessage(getString(R.string.delete_route))
+                .setNeutralButton("Cancel") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .setPositiveButton(getString(R.string.confirm)) { dialog, _ ->
+                    // User confirms delete
+
+                    dialog.dismiss()
+
+                    createLoadingDialog()
+
+                    val routeRef = db.collection("trajets").document(currentDocument)
+
+                    // Fetch all the scheduled times of current displayed Route
+                    // Used because Transactions can't fetch a whole collection for some reasons ?????????????
+                    // PS: i hate google for this
+                    routeRef.collection("horaires").get(Source.SERVER)
+                        .addOnSuccessListener { horaires ->
+
+                            db.runBatch { batch ->
+
+                                // Delete all the documents inside
+                                for (horaire in horaires) {
+                                    batch.delete(routeRef.collection("horaires").document(horaire.id))
+                                }
+
+                                batch.delete(routeRef) // Delete Route document
+
+                            }.addOnCompleteListener {
+                                dismissLoadingDialog()
+
+                                supportFragmentManager.popBackStack()
+                            }
+                        }
+                }
+                .show()
         }
     }
 
