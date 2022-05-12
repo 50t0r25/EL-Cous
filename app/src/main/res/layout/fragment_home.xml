@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/card_background_shape"
@@ -42,18 +41,19 @@
                 android:text="@string/choose"
                 android:textColor="@color/second_text"
                 android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@id/itineraryTextView"
-                tools:layout_editor_absoluteX="10dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/itineraryTextView" />
 
             <TextView
                 android:id="@+id/departureTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
                 android:layout_marginStart="20dp"
-                android:textSize="15sp"
+                android:layout_marginTop="100dp"
                 android:fontFamily="@font/nunito_extrabold"
                 android:text="@string/departure"
+                android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/chooseTextView" />
 
@@ -103,9 +103,9 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:layout_marginStart="20dp"
                 android:background="@drawable/spinner_background"
+                android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="@id/departureTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/departureTextView"
@@ -115,8 +115,8 @@
                     android:id="@+id/departureSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:ms_arrow_tint="@color/main_orange"
-                    android:fontFamily="@font/nunito_regular"/>
+                    android:fontFamily="@font/nunito_regular"
+                    app:ms_arrow_tint="@color/main_orange" />
 
             </LinearLayout>
 
