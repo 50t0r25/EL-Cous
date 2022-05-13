@@ -8,6 +8,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -21,6 +23,7 @@ import java.util.concurrent.LinkedBlockingQueue
 class MainActivity : AppCompatActivity() {
 
     private val db = Firebase.firestore
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var loading: AlertDialog
     var isAdmin = false
@@ -30,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ELCous) // Sets theme to override splash screen theme
         super.onCreate(savedInstanceState)
+
+        auth = Firebase.auth
 
         // Define the shared preferences
         val sharedpref: SharedPreferences =
@@ -107,6 +112,14 @@ class MainActivity : AppCompatActivity() {
                         }
                 }
                 .show()
+        }
+    }
+
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and sign them up if they aren't.
+        if (auth.currentUser == null) {
+            auth.signInAnonymously()
         }
     }
 

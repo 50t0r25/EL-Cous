@@ -12,7 +12,7 @@
     <string name="welcome_text1">Simple, rapide et sécurisé</string>
     <string name="welcome_button">C’est Parti !</string>
     <string name="loading">Patientez svp…</string>
-    <string name="empty_database_error">Une erreur est survenue, Assurez vous que vous avez une connexion internet stable et réessayer.</string>
+    <string name="empty_database_error">Une erreur est survenue, Assurez que vous avez une connexion internet stable et réessayez.</string>
     <string name="search_results">Résultat de la recherche:</string>
     <string name="enter_admin_key">Veuillez saisir la clé administrateur:</string>
     <string name="admin_key">Clé administrateur</string>
