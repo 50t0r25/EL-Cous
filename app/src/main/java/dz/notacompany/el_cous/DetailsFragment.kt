@@ -1,5 +1,6 @@
 package dz.notacompany.el_cous
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -63,6 +64,8 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
                 .setPositiveButton(getString(R.string.confirm)) { dialog, _ ->
                     dialog.dismiss()
 
+                    mainAct.createLoadingDialog()
+
                     val scheduleRef = db.collection("trajets").document(documentID).collection("horaires").document(schedulesList[position].itemID)
                     var reportsSize = 0
 
@@ -96,7 +99,10 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
 
                             null
                         }.addOnSuccessListener {
+                            mainAct.dismissLoadingDialog()
+
                             textView.visibility = View.VISIBLE
+                            textView.setTextColor(Color.parseColor("#92000000"))
                             schedulesList[position].userHasReported = false
                             textView.text = "${getString(R.string.reported_delays0)} $reportsSize ${getString(R.string.reported_delays1)}"
                             if (reportsSize == 0) textView.visibility = View.GONE
@@ -126,7 +132,10 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
 
                             null
                         }.addOnSuccessListener {
+                            mainAct.dismissLoadingDialog()
+
                             textView.visibility = View.VISIBLE
+                            textView.setTextColor(Color.parseColor("#EF5F00"))
                             schedulesList[position].userHasReported = true
                             textView.text = "${getString(R.string.reported_delays0)} $reportsSize ${getString(R.string.reported_delays1)}"
                         }

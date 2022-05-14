@@ -1,6 +1,7 @@
 package dz.notacompany.el_cous
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class SchedulesAdapter(private val context : Context, private var schedulesList:
             if (schedulesList[position].delays != 0) {
                 delaysTextView.visibility = View.VISIBLE
                 delaysTextView.text = "${context.getString(R.string.reported_delays0)} ${schedulesList[position].delays} ${context.getString(R.string.reported_delays1)}"
+                if (schedulesList[position].userHasReported) delaysTextView.setTextColor(Color.parseColor("#EF5F00"))
             }
             cousNumberTextView.text = "Cous N°".plus(schedulesList[position].itemOrder)
             departureTimeTextView.text = schedulesList[position].scheduleDepartureTime
