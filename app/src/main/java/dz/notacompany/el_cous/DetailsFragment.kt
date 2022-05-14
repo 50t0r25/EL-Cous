@@ -46,22 +46,31 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
         val schedulesList = mutableListOf<ScheduleItem>()
 
         // Function will be passed to the adapter to run stuff that can't be run inside it otherwise
+        // Runs when the schedule items are clicked
         fun onScheduleClick(position : Int, textView : TextView) {
+            // Depending on if the user has already reported a delay on this schedule
+            // They will either add a report, or remove their report if done previously
 
+            // Initialize stuff depending on the above
+            var thisTitle = getString(R.string.confirm_report)
             var dialogMessage = getString(R.string.add_report)
             var isRemoving = false
             if (schedulesList[position].userHasReported) {
+                thisTitle = getString(R.string.confirm_remove_report)
                 dialogMessage = getString(R.string.remove_report)
                 isRemoving = true
             }
 
+            // Ask for confirmation
             MaterialAlertDialogBuilder(requireContext())
-                .setTitle(getString(R.string.confirm))
+                .setTitle(thisTitle)
                 .setMessage(dialogMessage)
                 .setNeutralButton(getString(R.string.cancel)) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .setPositiveButton(getString(R.string.confirm)) { dialog, _ ->
+                    // User confirms
+
                     dialog.dismiss()
 
                     mainAct.createLoadingDialog()
@@ -69,7 +78,7 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
                     val scheduleRef = db.collection("trajets").document(documentID).collection("horaires").document(schedulesList[position].itemID)
                     var reportsSize = 0
 
-                    if (isRemoving) {
+                    if (isRemoving) { // User is removing his report
 
                         db.runTransaction { transaction ->
                             val thisSchedule = transaction.get(scheduleRef)
@@ -108,7 +117,7 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
                             if (reportsSize == 0) textView.visibility = View.GONE
                         }
 
-                    } else {
+                    } else { // User is adding a report
 
                         db.runTransaction { transaction ->
                             val thisSchedule = transaction.get(scheduleRef)
@@ -164,9 +173,13 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
                         // Adds each schedule object from the DB to our list
                         for (horaire in horaires) {
 
+                            // Get the current device's day & month
                             val cal = Calendar.getInstance()
                             val currentDate = "${cal.get(Calendar.MONTH)}/${cal.get(Calendar.DAY_OF_MONTH)}"
 
+                            // If there is a last reported day & month and it doesn't match the current day
+                            // Clear all the reports, then add the schedule to our list
+                            // (Basically will make it look like the reports clear every 24h, but it's done client-side)
                             if (horaire.data["lastReport"] != null && horaire.data["lastReport"].toString() != currentDate) {
                                 db.runBatch { batch ->
 
@@ -179,7 +192,7 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
 
                                     addScheduleToList(horaire,schedulesList,true)
                                 }
-                            } else {
+                            } else { // Just add schedule to list normally
                                 addScheduleToList(horaire,schedulesList,false)
                             }
 
@@ -199,11 +212,15 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
 
     // Function adds a schedule from the received object from the DB to a list of ScheduleItem
     private fun addScheduleToList(horaire: QueryDocumentSnapshot, list: MutableList<ScheduleItem>, gotCleared : Boolean) {
+        // gotCleared used to display schedules as empty when the date doesn't match and they get cleared
+        // Since the clearing isn't instant, gotta manually make them empty client-side
+
         val id = horaire.id
         val order = horaire.data["ordre"].toString().toInt()
         val departure = horaire.data["depart"].toString()
         val arrival = horaire.data["arrive"].toString()
 
+        // retards = delays :)
         val retards = horaire.data["retards"] as ArrayList<String>?
         var delays = 0
         var userHasReported = false

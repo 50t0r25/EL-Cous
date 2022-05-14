@@ -135,7 +135,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/nunito_medium"
+        android:fontFamily="@font/nunito_bold"
         android:textAlignment="center"
         android:text="@string/reported_delays0"
         android:textColor="@color/second_text"

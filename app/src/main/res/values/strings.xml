@@ -24,6 +24,8 @@
     <string name="admin_details">Ici vous pouvez ajoutez des trajets.\nVous pouvez aussi supprimer des trajets depuis leur page details appropriée.</string>
     <string name="cancel">Annuler</string>
     <string name="caution">Avertissement</string>
+    <string name="confirm_report">Signaler un retard?</string>
+    <string name="confirm_remove_report">Retirer votre signalement?</string>
     <string name="delete_route">Êtes-vous sûr de vouloir definitivement supprimer ce trajet?</string>
     <string name="reported_delays0">Retard signalé par</string>
     <string name="reported_delays1">étudiant(s) aujourdhui</string>

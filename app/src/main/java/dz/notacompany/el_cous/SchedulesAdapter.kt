@@ -27,11 +27,17 @@ class SchedulesAdapter(private val context : Context, private var schedulesList:
                 onScheduleClick(position, delaysTextView)
             }
 
+            // If there has been delays reported, display the TextView saying the number of reports
             if (schedulesList[position].delays != 0) {
+
                 delaysTextView.visibility = View.VISIBLE
                 delaysTextView.text = "${context.getString(R.string.reported_delays0)} ${schedulesList[position].delays} ${context.getString(R.string.reported_delays1)}"
+
+                // If user is has included a report in the ones displayed, TextView will be different color
                 if (schedulesList[position].userHasReported) delaysTextView.setTextColor(Color.parseColor("#EF5F00"))
             }
+
+            // Display schedule info in the layout item
             cousNumberTextView.text = "Cous N°".plus(schedulesList[position].itemOrder)
             departureTimeTextView.text = schedulesList[position].scheduleDepartureTime
             arrivalTimeTextView.text = schedulesList[position].scheduleArrivalTime
