@@ -25,4 +25,8 @@
     <string name="cancel">Annuler</string>
     <string name="caution">Avertissement</string>
     <string name="delete_route">Êtes-vous sûr de vouloir definitivement supprimer ce trajet?</string>
+    <string name="reported_delays0">Retard signalé par</string>
+    <string name="reported_delays1">étudiant(s) aujourdhui</string>
+    <string name="add_report">Êtes-vous sûr de vouloir signaler un retard pour cet horaire?</string>
+    <string name="remove_report">Êtes-vous sûr de vouloir annuler votre signalement de retard pour cet horaire?</string>
 </resources>

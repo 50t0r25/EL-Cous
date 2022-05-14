@@ -1,11 +1,14 @@
 package dz.notacompany.el_cous
 
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dz.notacompany.el_cous.databinding.ItemScheduleBinding
 
-class SchedulesAdapter(var schedulesList: List<ScheduleItem>) : RecyclerView.Adapter<SchedulesAdapter.SchedulesViewHolder>() {
+class SchedulesAdapter(private val context : Context, private var schedulesList: List<ScheduleItem>, private val onScheduleClick : (position : Int, textView : TextView) -> Unit) : RecyclerView.Adapter<SchedulesAdapter.SchedulesViewHolder>() {
 
     inner class SchedulesViewHolder(val binding: ItemScheduleBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -19,6 +22,14 @@ class SchedulesAdapter(var schedulesList: List<ScheduleItem>) : RecyclerView.Ada
     override fun onBindViewHolder(holder: SchedulesViewHolder, position: Int) {
         holder.binding.apply {
 
+            itemTripCard.setOnClickListener {
+                onScheduleClick(position, delaysTextView)
+            }
+
+            if (schedulesList[position].delays != 0) {
+                delaysTextView.visibility = View.VISIBLE //${schedulesList[position].delays}
+                delaysTextView.text = "${context.getString(R.string.reported_delays0)} ${schedulesList[position].delays} ${context.getString(R.string.reported_delays1)}"
+            }
             cousNumberTextView.text = "Cous N°".plus(schedulesList[position].itemOrder)
             departureTimeTextView.text = schedulesList[position].scheduleDepartureTime
             arrivalTimeTextView.text = schedulesList[position].scheduleArrivalTime

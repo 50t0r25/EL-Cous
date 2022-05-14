@@ -2,24 +2,34 @@ package dz.notacompany.el_cous
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_details.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragment_details) {
 
     private val db = Firebase.firestore
+    private lateinit var auth: FirebaseAuth
     private lateinit var mainAct : MainActivity
 
     private lateinit var source: Source
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        auth = Firebase.auth
 
         mainAct = activity as MainActivity // Reference to MainActivity
 
@@ -33,6 +43,98 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
         if (mainAct.isAdmin) mainAct.deleteRouteButton.visibility = View.VISIBLE
 
         val schedulesList = mutableListOf<ScheduleItem>()
+
+        // Function will be passed to the adapter to run stuff that can't be run inside it otherwise
+        fun onScheduleClick(position : Int, textView : TextView) {
+
+            var dialogMessage = getString(R.string.add_report)
+            var isRemoving = false
+            if (schedulesList[position].userHasReported) {
+                dialogMessage = getString(R.string.remove_report)
+                isRemoving = true
+            }
+
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.confirm))
+                .setMessage(dialogMessage)
+                .setNeutralButton(getString(R.string.cancel)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .setPositiveButton(getString(R.string.confirm)) { dialog, _ ->
+                    dialog.dismiss()
+
+                    val scheduleRef = db.collection("trajets").document(documentID).collection("horaires").document(schedulesList[position].itemID)
+                    var reportsSize = 0
+
+                    if (isRemoving) {
+
+                        db.runTransaction { transaction ->
+                            val thisSchedule = transaction.get(scheduleRef)
+                            var newReports : ArrayList<String>? = arrayListOf()
+
+                            val reports = thisSchedule.data?.get("retards") as ArrayList<String>?
+
+                            reports?.let { newReports!!.addAll(it) }
+                            newReports!!.remove(auth.uid.toString())
+
+                            reportsSize = newReports.size
+
+                            val cal = Calendar.getInstance()
+                            var newDate : String? = "${cal.get(Calendar.MONTH)}/${cal.get(Calendar.DAY_OF_MONTH)}"
+
+                            if (newReports.size == 0) {
+                                newReports = null
+                                newDate = null
+                            }
+
+                            val newData = hashMapOf(
+                                "retards" to newReports,
+                                "lastReport" to newDate
+                            )
+
+                            transaction.set(scheduleRef, newData, SetOptions.merge())
+
+                            null
+                        }.addOnSuccessListener {
+                            textView.visibility = View.VISIBLE
+                            schedulesList[position].userHasReported = false
+                            textView.text = "${getString(R.string.reported_delays0)} $reportsSize ${getString(R.string.reported_delays1)}"
+                            if (reportsSize == 0) textView.visibility = View.GONE
+                        }
+
+                    } else {
+
+                        db.runTransaction { transaction ->
+                            val thisSchedule = transaction.get(scheduleRef)
+                            val newReports : ArrayList<String> = arrayListOf()
+
+                            val reports = thisSchedule.data?.get("retards") as ArrayList<String>?
+
+                            reports?.let { newReports.addAll(it) }
+                            newReports.add(auth.uid.toString())
+
+                            reportsSize = newReports.size
+
+                            val cal = Calendar.getInstance()
+
+                            val newData = hashMapOf(
+                                "retards" to newReports,
+                                "lastReport" to "${cal.get(Calendar.MONTH)}/${cal.get(Calendar.DAY_OF_MONTH)}"
+                            )
+
+                            transaction.set(scheduleRef, newData, SetOptions.merge())
+
+                            null
+                        }.addOnSuccessListener {
+                            textView.visibility = View.VISIBLE
+                            schedulesList[position].userHasReported = true
+                            textView.text = "${getString(R.string.reported_delays0)} $reportsSize ${getString(R.string.reported_delays1)}"
+                        }
+
+                    }
+                }
+                .show()
+        }
 
         mainAct.createLoadingDialog()
 
@@ -50,14 +152,34 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
                 db.collection("trajets").document(documentID).collection("horaires").get(source)
                     .addOnSuccessListener { horaires ->
 
-                        // Adds each Schudule object from the DB to our list
+                        // Adds each schedule object from the DB to our list
                         for (horaire in horaires) {
-                            addScheduleToList(horaire,schedulesList)
+
+                            val cal = Calendar.getInstance()
+                            val currentDate = "${cal.get(Calendar.MONTH)}/${cal.get(Calendar.DAY_OF_MONTH)}"
+
+                            if (horaire.data["lastReport"] != null && horaire.data["lastReport"].toString() != currentDate) {
+                                db.runBatch { batch ->
+
+                                    val horaireRef = db.collection("trajets").document(documentID).collection("horaires").document(horaire.id)
+                                    val newData = hashMapOf(
+                                        "lastReport" to null,
+                                        "retards" to null
+                                    )
+                                    batch.set(horaireRef, newData, SetOptions.merge())
+
+                                    addScheduleToList(horaire,schedulesList,true)
+                                }
+                            } else {
+                                addScheduleToList(horaire,schedulesList,false)
+                            }
+
+
                         }
                         schedulesList.sortBy { it.itemOrder } // Sorts the list by the itemOrder variable
 
                         // Initializes the RecyclerView with the adapter
-                        schedulesRecyclerView.adapter = SchedulesAdapter(schedulesList)
+                        schedulesRecyclerView.adapter = SchedulesAdapter(requireContext(), schedulesList, { position, textView -> onScheduleClick(position, textView)})
                         schedulesRecyclerView.layoutManager = LinearLayoutManager(context)
 
                         mainAct.dismissLoadingDialog()
@@ -67,12 +189,20 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
     }
 
     // Function adds a schedule from the received object from the DB to a list of ScheduleItem
-    private fun addScheduleToList(horaire: QueryDocumentSnapshot, list: MutableList<ScheduleItem>) {
+    private fun addScheduleToList(horaire: QueryDocumentSnapshot, list: MutableList<ScheduleItem>, gotCleared : Boolean) {
         val id = horaire.id
         val order = horaire.data["ordre"].toString().toInt()
         val departure = horaire.data["depart"].toString()
         val arrival = horaire.data["arrive"].toString()
 
-        list.add(ScheduleItem(id,order,departure,arrival))
+        val retards = horaire.data["retards"] as ArrayList<String>?
+        var delays = 0
+        var userHasReported = false
+        if (retards != null && !gotCleared) {
+            delays = retards.size
+            if (retards.contains(auth.uid.toString())) userHasReported = true
+        }
+
+        list.add(ScheduleItem(id,order,departure,arrival,delays,userHasReported))
     }
 }

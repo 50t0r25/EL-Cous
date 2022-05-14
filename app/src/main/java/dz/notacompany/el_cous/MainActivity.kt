@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             MaterialAlertDialogBuilder(this)
                 .setTitle(getString(R.string.caution))
                 .setMessage(getString(R.string.delete_route))
-                .setNeutralButton("Cancel") { dialog, _ ->
+                .setNeutralButton(getString(R.string.cancel)) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .setPositiveButton(getString(R.string.confirm)) { dialog, _ ->
