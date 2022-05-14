@@ -27,7 +27,7 @@ class SchedulesAdapter(private val context : Context, private var schedulesList:
             }
 
             if (schedulesList[position].delays != 0) {
-                delaysTextView.visibility = View.VISIBLE //${schedulesList[position].delays}
+                delaysTextView.visibility = View.VISIBLE
                 delaysTextView.text = "${context.getString(R.string.reported_delays0)} ${schedulesList[position].delays} ${context.getString(R.string.reported_delays1)}"
             }
             cousNumberTextView.text = "Cous N°".plus(schedulesList[position].itemOrder)
