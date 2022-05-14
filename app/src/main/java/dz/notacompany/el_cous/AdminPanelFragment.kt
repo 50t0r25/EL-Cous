@@ -53,6 +53,11 @@ class AdminPanelFragment : Fragment(R.layout.fragment_admin_panel) {
                     }
 
                     mainAct.dismissLoadingDialog()
+
+                }.addOnFailureListener {
+                    mainAct.dismissLoadingDialog()
+
+                    Toast.makeText(context, it.localizedMessage, Toast.LENGTH_SHORT).show()
                 }
 
         }
@@ -96,6 +101,11 @@ class AdminPanelFragment : Fragment(R.layout.fragment_admin_panel) {
                 mainAct.dismissLoadingDialog()
 
                 parentFragmentManager.popBackStack()
+
+            }.addOnFailureListener {
+                mainAct.dismissLoadingDialog()
+
+                Toast.makeText(context, it.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
     }

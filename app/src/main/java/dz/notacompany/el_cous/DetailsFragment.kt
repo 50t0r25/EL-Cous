@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -115,6 +116,11 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
                             schedulesList[position].userHasReported = false
                             textView.text = "${getString(R.string.reported_delays0)} $reportsSize ${getString(R.string.reported_delays1)}"
                             if (reportsSize == 0) textView.visibility = View.GONE
+
+                        }.addOnFailureListener {
+                            mainAct.dismissLoadingDialog()
+
+                            Toast.makeText(context, it.localizedMessage, Toast.LENGTH_SHORT).show()
                         }
 
                     } else { // User is adding a report
@@ -147,6 +153,11 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
                             textView.setTextColor(Color.parseColor("#EF5F00"))
                             schedulesList[position].userHasReported = true
                             textView.text = "${getString(R.string.reported_delays0)} $reportsSize ${getString(R.string.reported_delays1)}"
+
+                        }.addOnFailureListener {
+                            mainAct.dismissLoadingDialog()
+
+                            Toast.makeText(context, it.localizedMessage, Toast.LENGTH_SHORT).show()
                         }
 
                     }
@@ -170,41 +181,53 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
                 db.collection("trajets").document(documentID).collection("horaires").get(source)
                     .addOnSuccessListener { horaires ->
 
-                        // Adds each schedule object from the DB to our list
-                        for (horaire in horaires) {
+                        if (horaires.isEmpty) { // Didn't get any results
 
-                            // Get the current device's day & month
-                            val cal = Calendar.getInstance()
-                            val currentDate = "${cal.get(Calendar.MONTH)}/${cal.get(Calendar.DAY_OF_MONTH)}"
+                            // Display error message
+                            schedulesRecyclerView.visibility = View.GONE
+                            errorTextView.visibility = View.VISIBLE
 
-                            // If there is a last reported day & month and it doesn't match the current day
-                            // Clear all the reports, then add the schedule to our list
-                            // (Basically will make it look like the reports clear every 24h, but it's done client-side)
-                            if (horaire.data["lastReport"] != null && horaire.data["lastReport"].toString() != currentDate) {
-                                db.runBatch { batch ->
+                            mainAct.dismissLoadingDialog()
 
-                                    val horaireRef = db.collection("trajets").document(documentID).collection("horaires").document(horaire.id)
-                                    val newData = hashMapOf(
-                                        "lastReport" to null,
-                                        "retards" to null
-                                    )
-                                    batch.set(horaireRef, newData, SetOptions.merge())
+                        } else { // Got results
 
-                                    addScheduleToList(horaire,schedulesList,true)
+                            // Adds each schedule object from the DB to our list
+                            for (horaire in horaires) {
+
+                                // Get the current device's day & month
+                                val cal = Calendar.getInstance()
+                                val currentDate = "${cal.get(Calendar.MONTH)}/${cal.get(Calendar.DAY_OF_MONTH)}"
+
+                                // If there is a last reported day & month and it doesn't match the current day
+                                // Clear all the reports, then add the schedule to our list
+                                // (Basically will make it look like the reports clear every 24h, but it's done client-side)
+                                if (horaire.data["lastReport"] != null && horaire.data["lastReport"].toString() != currentDate) {
+                                    db.runBatch { batch ->
+
+                                        val horaireRef = db.collection("trajets").document(documentID).collection("horaires").document(horaire.id)
+                                        val newData = hashMapOf(
+                                            "lastReport" to null,
+                                            "retards" to null
+                                        )
+                                        batch.set(horaireRef, newData, SetOptions.merge())
+
+                                        addScheduleToList(horaire,schedulesList,true)
+                                    }
+                                } else { // Just add schedule to list normally
+                                    addScheduleToList(horaire,schedulesList,false)
                                 }
-                            } else { // Just add schedule to list normally
-                                addScheduleToList(horaire,schedulesList,false)
-                            }
 
+
+                            }
+                            schedulesList.sortBy { it.itemOrder } // Sorts the list by the itemOrder variable
+
+                            // Initializes the RecyclerView with the adapter
+                            schedulesRecyclerView.adapter = SchedulesAdapter(requireContext(), schedulesList, { position, textView -> onScheduleClick(position, textView)})
+                            schedulesRecyclerView.layoutManager = LinearLayoutManager(context)
+
+                            mainAct.dismissLoadingDialog()
 
                         }
-                        schedulesList.sortBy { it.itemOrder } // Sorts the list by the itemOrder variable
-
-                        // Initializes the RecyclerView with the adapter
-                        schedulesRecyclerView.adapter = SchedulesAdapter(requireContext(), schedulesList, { position, textView -> onScheduleClick(position, textView)})
-                        schedulesRecyclerView.layoutManager = LinearLayoutManager(context)
-
-                        mainAct.dismissLoadingDialog()
                     }
             }
 
