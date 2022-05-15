@@ -2,6 +2,7 @@ package dz.notacompany.el_cous
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -68,6 +69,12 @@ class MainActivity : AppCompatActivity() {
 
         adminButton.setOnClickListener {
             replaceCurrentFragment(AdminPanelFragment(),false)
+        }
+
+        githubButton.setOnClickListener {
+            val openURL = Intent(Intent.ACTION_VIEW)
+            openURL.data = Uri.parse("https://github.com/50t0r25/EL-Cous")
+            startActivity(openURL)
         }
 
         // Button to delete Route (Only available for admins)

@@ -25,6 +25,7 @@ class AdminPanelFragment : Fragment(R.layout.fragment_admin_panel) {
         mainAct.topBarTextView2.text = getString(R.string.top_bar_admin)
         mainAct.topBarTextView.visibility = View.GONE
         mainAct.adminButton.visibility = View.GONE
+        mainAct.githubButton.visibility = View.GONE
 
         // If user isn't admin, ask for admin key
         if (!mainAct.isAdmin) {

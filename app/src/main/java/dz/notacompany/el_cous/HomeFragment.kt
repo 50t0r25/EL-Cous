@@ -26,6 +26,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         mainAct.topBarLayout.visibility = View.GONE
         mainAct.topBarTextView.visibility = View.VISIBLE
         mainAct.adminButton.visibility = View.VISIBLE
+        mainAct.githubButton.visibility = View.VISIBLE
         mainAct.deleteRouteButton.visibility = View.GONE
 
         // These lists store all the departures, destinations and their IDs from the database
@@ -125,6 +126,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             // Clears the spinners to fix some retarded problem
             departureSpinner.setItems(String())
             destinationSpinner.setItems(String())
+        }
+
+        displayHelpButton.setOnClickListener {
+
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.help_title))
+                .setMessage(getString(R.string.help_description))
+                .setPositiveButton(getString(R.string._return), null)
+                .show()
         }
 
     }

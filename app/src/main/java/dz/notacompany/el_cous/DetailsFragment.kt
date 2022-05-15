@@ -42,6 +42,7 @@ class DetailsFragment(private val documentID : String) : Fragment(R.layout.fragm
         mainAct.topBarTextView2.text = getString(R.string.top_bar_schedules)
         mainAct.topBarTextView.visibility = View.GONE
         mainAct.adminButton.visibility = View.GONE
+        mainAct.githubButton.visibility = View.GONE
         if (mainAct.isAdmin) mainAct.deleteRouteButton.visibility = View.VISIBLE
 
         val schedulesList = mutableListOf<ScheduleItem>()

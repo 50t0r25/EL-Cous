@@ -28,7 +28,11 @@
     <string name="confirm_remove_report">Retirer votre signalement?</string>
     <string name="delete_route">Êtes-vous sûr de vouloir definitivement supprimer ce trajet?</string>
     <string name="reported_delays0">Retard signalé par</string>
-    <string name="reported_delays1">étudiant(s) aujourdhui</string>
+    <string name="reported_delays1">étudiant(s) aujourd\'hui</string>
     <string name="add_report">Êtes-vous sûr de vouloir signaler un retard pour cet horaire?</string>
     <string name="remove_report">Êtes-vous sûr de vouloir annuler votre signalement de retard pour cet horaire?</string>
+    <string name="help">Aide</string>
+    <string name="help_title">EL Cous, c\'est quoi?</string>
+    <string name="help_description">EL Cous est une application de gestion des horaires pour les bus Universitaire "Cous".\nElle vous permet de rechercher tous les horaires disponible pour chaque trajet de bus, vous pouver aussi signaler le retard d\'un bus si vous êtes sur place pour informer les autres étudiants.\n\nLes administrateurs peuvent également accéder a l\'espace administrateur avec la clé pour ajouter ou supprimer des trajets.</string>
+    <string name="_return">Retour</string>
 </resources>

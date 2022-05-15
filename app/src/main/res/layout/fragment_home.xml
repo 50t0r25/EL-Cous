@@ -149,12 +149,28 @@
                 android:layout_marginTop="80dp"
                 android:fontFamily="@font/nunito_bold"
                 android:text="@string/search"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/destinationSpinnerLayout"
                 app:layout_constraintStart_toStartOf="@+id/destinationSpinnerLayout"
                 app:layout_constraintTop_toBottomOf="@+id/destinationSpinnerLayout"
                 app:strokeColor="@color/main_orange"
                 app:strokeWidth="2dp" />
+
+            <Button
+                android:id="@+id/displayHelpButton"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@string/help"
+                android:textSize="16sp"
+                app:strokeColor="@color/main_orange"
+                app:strokeWidth="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/searchButton"
+                app:layout_constraintEnd_toStartOf="@+id/searchButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/searchButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
