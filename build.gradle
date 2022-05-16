@@ -5,7 +5,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.google.gms:google-services:4.3.10'  // Google Services plugin
+        // DO NOT UPGRADE GOOGLE SERVICES, 4.3.10 IS BROKEN
+        classpath 'com.google.gms:google-services:4.3.8'  // Google Services plugin
     }
 }
 
